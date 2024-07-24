@@ -1,0 +1,65 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 200px; /* Fixed height to maintain aspect ratio */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-content {
+    padding: 16px;
+    flex-grow: 1;
+  }
+  
+
+  /* Custom styles for ReactQuill */
+.ql-container {
+    background-color: #1f2937; /* Dark background for the editor */
+    color: #e5e7eb; /* Light text color */
+    border: 1px solid #374151; /* Border color matching the dark theme */
+  }
+  
+  .ql-editor {
+    min-height: 200px; /* Set a minimum height for the editor */
+  }
+  
+  .ql-toolbar {
+    background-color: #374151; /* Dark background for toolbar */
+    border-bottom: 1px solid #4b5563; /* Slightly lighter border */
+  }
+  
+  .ql-toolbar .ql-formats {
+    color: #e5e7eb; /* Light color for toolbar icons */
+  }
+  
+  .ql-editor a {
+    color: #3b82f6; /* Link color */
+  }
+  
+  .ql-editor blockquote {
+    border-left: 4px solid #4b5563; /* Dark color for blockquote */
+    padding-left: 16px; /* Space from the border */
+    margin: 16px 0; /* Margin for blockquote */
+  }
+  

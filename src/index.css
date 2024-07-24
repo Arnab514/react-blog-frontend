@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for Quill editor */
+.ql-container {
+  min-height: 300px;
+}
+
+.ql-editor {
+  min-height: 200px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+/* Tailwind prose styling */
+.prose {
+  max-width: none;
+}
+
+.prose-invert {
+  color: white;
+}
+
+.prose-invert a {
+  color: #60a5fa;
+}
+/* Custom Navbar styling */
+.navbar {
+  background-color: #1a1a1a; /* Dark background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Optional custom styling */
+.card-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-color: #4b4b4b; /* Customize border color on hover */
+}
