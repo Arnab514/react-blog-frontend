@@ -15,6 +15,7 @@ const UpdateBlog = () => {
   const [content, setContent] = useState('');
   const [topics, setTopics] = useState([]);
   const [availableTopics, setAvailableTopics] = useState(['Technology', 'Fashion', 'Education', 'Politics', 'Daily News', 'Others']);
+  const [useFile, setUseFile] = useState(false);
 
   useEffect(() => {
     const blogs = getFromLocalStorage('blogs') || [];
@@ -55,6 +56,17 @@ const UpdateBlog = () => {
   const handleTopicChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
     setTopics(selectedOptions);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setThumbnail(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -98,15 +110,48 @@ const UpdateBlog = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="thumbnail" className="block text-lg font-medium mb-2">Thumbnail URL</label>
-          <input
-            type="text"
-            id="thumbnail"
-            value={thumbnail}
-            onChange={(e) => setThumbnail(e.target.value)}
-            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md"
-            required
-          />
+          <label className="block text-lg font-medium mb-2">Thumbnail</label>
+          <div className="mb-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name="thumbnailOption"
+                value="url"
+                checked={!useFile}
+                onChange={() => setUseFile(false)}
+                className="mr-2"
+              />
+              Use URL
+            </label>
+            <label className="inline-flex items-center ml-4">
+              <input
+                type="radio"
+                name="thumbnailOption"
+                value="file"
+                checked={useFile}
+                onChange={() => setUseFile(true)}
+                className="mr-2"
+              />
+              Upload File
+            </label>
+          </div>
+          {useFile ? (
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md"
+              required
+            />
+          ) : (
+            <input
+              type="text"
+              id="thumbnail"
+              value={thumbnail}
+              onChange={(e) => setThumbnail(e.target.value)}
+              className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md"
+              required
+            />
+          )}
         </div>
 
         <div className="mb-4">

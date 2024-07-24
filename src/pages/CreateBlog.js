@@ -10,20 +10,28 @@ const CreateBlog = () => {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [thumbnail, setThumbnail] = useState('');
+  const [thumbnailFile, setThumbnailFile] = useState(null);
   const [content, setContent] = useState('');
   const [topics, setTopics] = useState([]);
   const [availableTopics, setAvailableTopics] = useState(['Technology', 'Fashion', 'Education', 'Politics', 'Daily News', 'Others']);
   
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    let thumbnailUrl = thumbnail;
+    if (thumbnailFile) {
+      const base64Thumbnail = await convertFileToBase64(thumbnailFile);
+      thumbnailUrl = base64Thumbnail;
+    }
+    
     const newBlog = {
       id: Date.now(), // Simple ID generation
       title,
       author,
       date,
-      thumbnail,
+      thumbnail: thumbnailUrl,
       content,
       topics
     };
@@ -38,6 +46,23 @@ const CreateBlog = () => {
   const handleTopicChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
     setTopics(selectedOptions);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setThumbnailFile(file);
+      setThumbnail(''); // Clear URL input when a file is selected
+    }
+  };
+
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
@@ -88,7 +113,17 @@ const CreateBlog = () => {
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md"
-            required
+            disabled={thumbnailFile !== null} // Disable input if a file is selected
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="thumbnailFile" className="block text-lg font-medium mb-2">Or Upload Thumbnail</label>
+          <input
+            type="file"
+            id="thumbnailFile"
+            onChange={handleFileChange}
+            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md"
           />
         </div>
 
